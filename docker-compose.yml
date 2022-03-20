@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+
+    apache:
+        container_name: apache
+        image: php:8.0-apache
+        build: ./
+        depends_on:
+            - mysql
+        volumes:
+            - ./:/var/www/html/
+        env_file:
+            - ./.env
+        ports:
+            - 8000:80
+
+    mysql:
+        image: mysql
+        container_name: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: "password"
+            MYSQL_DATABASE: "didishop"
+            TZ: Asia/Tehran
+        volumes:
+            - /home/amirabroun/Documents/code/didishop/database/mysql:/var/lib/mysql
+        ports:
+            - 3306:3306
+
+    phpmyadmin:
+        image: "phpmyadmin:latest"
+        container_name: phpmyadmin
+        restart: always
+        links:
+            - mysql
+        environment:
+            UPLOAD_LIMIT: 3000M
+            PMA_HOST: mysql
+        ports:
+            - 8003:80
