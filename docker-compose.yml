@@ -19,11 +19,10 @@ services:
         container_name: mysql
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: "password"
-            MYSQL_DATABASE: "didishop"
-            TZ: Asia/Tehran
+            MYSQL_DATABASE: "${MYSQL_DATABASE}"
+            MYSQL_ROOT_PASSWORD: "${ROOT_PASSWORD}"
         volumes:
-            - /home/amirabroun/Documents/code/didishop/database/mysql:/var/lib/mysql
+            - /home/amirabroun/Documents/code/ :/var/lib/mysql
         ports:
             - 3306:3306
 
@@ -37,4 +36,4 @@ services:
             UPLOAD_LIMIT: 3000M
             PMA_HOST: mysql
         ports:
-            - 8003:80
+            - 8001:80
